@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40fd05d6e2f249f083bcb71b66330239, type: 3}
+  m_Name: LudoConfig
+  m_EditorClassIdentifier: 
+  DiceRollShuffles: 8
+  AIDelayPlusMinus: 0.5
+  AIDelayBeforeRollingDice: 0.5
+  AIDelayInChoosingToken: 0.5
+  DiceRollTime: 0.6
+  IdleTimeAfterDiceRoll: 0.5
+  DelayAfterTokenMoveComplete: 0.5
+  DelayBetweenTokenMoves: 0.15

@@ -2624,10 +2624,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c843e9c95d79f4c97790eb69628cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceSides: []
-  testToken: {fileID: 0}
-  biasedDice: 0
-  biasedOutcome: 6
+  TestToken: {fileID: 0}
+  BiasedDice: 0
+  BiasedOutcome: 6
 --- !u!1 &1023355332
 GameObject:
   m_ObjectHideFlags: 0
@@ -4229,17 +4228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0613c486e6ce646b3dfc5b75ce6da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DiceRollShuffles: 8
-  AIDelayPlusMinus: 0.5
-  AIDelayBeforeRollingDice: 0.5
-  AIDelayInChoosingToken: 0.5
-  DiceRollTime: 0.6
-  IdleTimeAfterDiceRoll: 0.5
-  DelayAfterTokenMoveComplete: 0.5
-  DelayBetweenTokenMoves: 0.15
-  selectedMatchType: 0
-  selectedNumPlayers: 4
-  waypointIndexToSearch: 0
+  LudoConfiguration: {fileID: 11400000, guid: 7481ec755359d43d9b236feceef148cb, type: 2}
+  SelectedMatchType: 0
+  SelectedNumPlayers: 4
+  WaypointIndexToSearch: 0
 --- !u!4 &1784934089
 Transform:
   m_ObjectHideFlags: 0
@@ -4267,11 +4259,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f721563cdddb9c4e9bfee8e4c5791c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMatchType: 2
-  numPlayers: 2
-  audioSource: {fileID: 1784934091}
-  diceRollsRemaining: 0
-  numSixes: 0
+  CurrentMatchType: 2
+  NumPlayers: 2
+  AudioSource: {fileID: 1784934091}
+  DiceRollsRemaining: 0
+  NumSixes: 0
 --- !u!82 &1784934091
 AudioSource:
   m_ObjectHideFlags: 0

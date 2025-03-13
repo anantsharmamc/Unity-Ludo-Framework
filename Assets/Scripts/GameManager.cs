@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
+using Utility;
 
 namespace com.bhambhoo.fairludo
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : SingletonScene<GameManager>
     {
         private enum GameSpeed { Normal, Fast, SuperFast, Ultra };
-        public static GameManager Instance;
 
         [Header("Factors for Game Speed")]
         public int DiceRollShuffles = 8;
@@ -24,11 +23,6 @@ namespace com.bhambhoo.fairludo
         
         [Header("Press F to search for tokens wrt player 1")]
         public byte WaypointIndexToSearch;
-        
-        private void OnEnable()
-        {
-            Instance = this;
-        }
 
         private void Start()
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace com.bhambhoo.fairludo
 {
-    public class SanUtils : MonoBehaviour
+    public static class SanUtils
     {
         private static Dictionary<Transform, AudioSource[]> transformAudioSourceMap;
         private static int ignoreRaycast = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using Utility;
 
 namespace com.bhambhoo.fairludo
 {
-    public class Constants : MonoBehaviour
+    public class Constants :  SingletonScene<Constants>
     {
         /*
          * Some overall constants:
@@ -69,9 +70,7 @@ namespace com.bhambhoo.fairludo
         public Transform[] P4Waypoints;
         public GameObject P4TurnHighlight;
         public Transform[] P4Bases = new Transform[4];
-
-        public static Constants Instance;
-
+        
         public Transform[] GetBases(byte playerIndex)
         {
             switch (playerIndex)
@@ -104,11 +103,6 @@ namespace com.bhambhoo.fairludo
                 default:
                     return Player1TokenColor;
             }
-        }
-
-        private void OnEnable()
-        {
-            Instance = this;
         }
 
         public Transform GetWaypoint(int playerIndex, int waypointIndex)

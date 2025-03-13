@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Utility;
 
 namespace com.bhambhoo.fairludo
 {
-    public class MatchManager : MonoBehaviour
+    public class MatchManager : SingletonScene<MatchManager>
     {
         public Constants.MatchType CurrentMatchType = Constants.MatchType.PassNPlay;
         public const bool InputAllowed = true;
         public static bool MatchRunning = false;
         public byte NumPlayers = 2;
         public AudioSource AudioSource;
-
-        public static MatchManager Instance;
-
+        
         private readonly List<PlayerToken> tokensWeCanMove = new List<PlayerToken>(4);
         public static int DiceResult = 1;
 
@@ -23,11 +22,6 @@ namespace com.bhambhoo.fairludo
         // on new player's turn this is set to 1
         public int DiceRollsRemaining = 0;
         public int NumSixes = 0;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         private void Start()
         {

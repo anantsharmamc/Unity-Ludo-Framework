@@ -1,18 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Utility;
 
 namespace com.bhambhoo.fairludo
 {
-    public class PlayersManager : MonoBehaviour
+    public class PlayersManager :  SingletonScene<PlayersManager>
     {
-        public static PlayersManager Instance;
         public static List<Player> Players = new List<Player>();
         static List<PlayerToken> tokensAt = new List<PlayerToken>();
-
-        private void Awake()
-        {
-            Instance = this;
-        }
 
         public static bool ChangePlayerType(Player player, Constants.PlayerType newType)
         {

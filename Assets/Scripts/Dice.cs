@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Utility;
 
 namespace com.bhambhoo.fairludo
 {
-    public class Dice : MonoBehaviour
+    public class Dice : SingletonScene<Dice>
     {
         private Sprite[] diceSides;
         private SpriteRenderer rend;
@@ -15,18 +16,12 @@ namespace com.bhambhoo.fairludo
         public bool BiasedDice;
         public int BiasedOutcome = 1;
         public static bool RollAllowed;
-        public static Dice Instance;
         
         private void Start()
         {
             rend = GetComponent<SpriteRenderer>();
             diceSides = Resources.LoadAll<Sprite>("DiceSides/");
             rend.sprite = diceSides[5];
-        }
-
-        private void OnEnable()
-        {                                 
-            Instance = this;
         }
         
         private void OnMouseDown()                                 

@@ -6,9 +6,7 @@ namespace com.bhambhoo.fairludo
     public static class AudioUtil
     {
         private static Dictionary<Transform, AudioSource[]> transformAudioSourceMap;
-        private static int ignoreRaycast = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
 
-        // Stops the audio source and plays the given clip on it
         public static void PlaySound(AudioClip clip, AudioSource audioSource = null)
         {
             if (audioSource == null)

@@ -59,13 +59,13 @@ namespace com.bhambhoo.fairludo
                     if (player.IsLocal)
                     {
                         Dice.Highlight(true);
-                        SanUtils.PlaySound(Constants.Instance.sfxLocalPlayerTurn);
+                        AudioUtil.PlaySound(Constants.Instance.sfxLocalPlayerTurn);
                         Dice.RollAllowed = true;
                     }
                     else
                     {
                         // Means it's a bot
-                        SanUtils.PlaySound(Constants.Instance.sfxOtherPlayerTurn);
+                        AudioUtil.PlaySound(Constants.Instance.sfxOtherPlayerTurn);
                         LudoAI.Instance.PlayTurn();
                     }
                     break;
@@ -73,7 +73,7 @@ namespace com.bhambhoo.fairludo
                     if (player.IsLocal)
                     {
                         Dice.Highlight(true);
-                        SanUtils.PlaySound(Constants.Instance.sfxLocalPlayerTurn);
+                        AudioUtil.PlaySound(Constants.Instance.sfxLocalPlayerTurn);
                         Dice.RollAllowed = true;
                     }
                     else
@@ -83,7 +83,7 @@ namespace com.bhambhoo.fairludo
                     break;
                 case Constants.MatchType.PassNPlay:
                     Dice.Highlight(true);
-                    SanUtils.PlaySound(Constants.Instance.sfxLocalPlayerTurn);
+                    AudioUtil.PlaySound(Constants.Instance.sfxLocalPlayerTurn);
                     Dice.RollAllowed = true;
                     break;
                 default:

@@ -105,7 +105,7 @@ namespace com.bhambhoo.fairludo
             {
                 yield return new WaitForSeconds(Constants.delayBetweenTokenMoves);
                 LocalWaypointIndex++;
-                SanUtils.PlaySound(Constants.Instance.sfxTokenHop);
+                AudioUtil.PlaySound(Constants.Instance.sfxTokenHop);
                 transform.position = Constants.Instance.GetWaypoint(player.PlayerIndex, LocalWaypointIndex).position;
             }
 
@@ -134,7 +134,7 @@ namespace com.bhambhoo.fairludo
                         // TODO update this for networked game
                         yield return new WaitForSeconds(Constants.delayBetweenTokenMoves);
                         oneToken.LocalWaypointIndex = -1;
-                        SanUtils.PlaySound(Constants.Instance.sfxTokenKill);
+                        AudioUtil.PlaySound(Constants.Instance.sfxTokenKill);
                         oneToken.transform.position = oneToken.Base.position;
                         yield return new WaitForSeconds(Constants.delayAfterTokenMoveComplete);
 

@@ -31,39 +31,6 @@ namespace com.bhambhoo.fairludo
 
             PlayersManager.Instance.Initialize(numPlayers, matchType);
 
-            // Initialize game pieces according to number of players
-            {
-                //// Initialize Player 1 which will always be there
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(1, Constants.Instance.P1Base1));
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(1, Constants.Instance.P1Base2));
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(1, Constants.Instance.P1Base3));
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(1, Constants.Instance.P1Base4));
-
-                //// Initialize Player 3 which will always be there, because match is atleast of two players, and second player is player 3.
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(3, Constants.Instance.P3Base1));
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(3, Constants.Instance.P3Base2));
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(3, Constants.Instance.P3Base3));
-                //AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(3, Constants.Instance.P3Base4));
-
-                //if (numPlayers > 2)
-                //{
-                //    // Initialize Player 2
-                //    AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(2, Constants.Instance.P2Base1));
-                //    AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(2, Constants.Instance.P2Base2));
-                //    AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(2, Constants.Instance.P2Base3));
-                //    AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(2, Constants.Instance.P2Base4));
-
-                //    if (numPlayers > 3)
-                //    {
-                //        // Initialize Player 2
-                //        AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(4, Constants.Instance.P4Base1));
-                //        AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(4, Constants.Instance.P4Base2));
-                //        AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(4, Constants.Instance.P4Base3));
-                //        AllTokens.Add(GameObject.Instantiate(Constants.Instance.playerToken).GetComponent<PlayerToken>().Initialize(4, Constants.Instance.P4Base4));
-                //    }
-                //}
-            }
-
             NextTurn();
             // After this we will await for the dice to be rolled
         }
@@ -123,71 +90,6 @@ namespace com.bhambhoo.fairludo
             }
 
         }
-
-
-        // This function also assumes playerindex is 1 for local player.
-        /// <summary>
-        /// This function initiates a turn. It does necessary actions if the player whose turn is, is local player, is AI Bot, or is an online player of another client.
-        /// </summary>
-        /// <param name="playerIndex"></param>
-        // public void InitiatePlayerTurn(byte playerIndex)
-        //{
-        // OLD OBSOLETE
-
-        //// Highlight the turn in the display.
-        //Constants.Instance.P1TurnHighlight.SetActive(false);
-        //Constants.Instance.P2TurnHighlight.SetActive(false);
-        //Constants.Instance.P3TurnHighlight.SetActive(false);
-        //Constants.Instance.P4TurnHighlight.SetActive(false);
-        //Constants.Instance.DiceTurnHighlight.SetActive(false);
-        //switch (playerIndex)
-        //{
-        //    case 1:
-        //        Constants.Instance.P1TurnHighlight.SetActive(true);
-        //        break;
-        //    case 2:
-        //        Constants.Instance.P2TurnHighlight.SetActive(true);
-        //        break;
-        //    case 3:
-        //        Constants.Instance.P3TurnHighlight.SetActive(true);
-        //        break;
-        //    case 4:
-        //        Constants.Instance.P4TurnHighlight.SetActive(true);
-        //        break;
-        //    default:
-        //        Constants.Instance.P1TurnHighlight.SetActive(true);
-        //        break;
-        //}
-
-        //// Highlight dice
-        //switch (currentMatchType)
-        //{
-        //    case MatchType.VsComputer:
-        //        if (playerIndex == LocalPlayerIndex)
-        //        {
-        //            Constants.Instance.DiceTurnHighlight.SetActive(true);
-        //            SanUtils.PlaySound(Constants.Instance.sfxLocalPlayerTurn, audioSource);
-        //            Dice.Instance.RollAllowed = true;
-        //        }
-        //        break;
-        //    case MatchType.Online:
-        //        if (playerIndex == LocalPlayerIndex)
-        //        {
-        //            Constants.Instance.DiceTurnHighlight.SetActive(true);
-        //            SanUtils.PlaySound(Constants.Instance.sfxLocalPlayerTurn, audioSource);
-        //            Dice.Instance.RollAllowed = true;
-        //        }
-        //        break;
-        //    case MatchType.PassNPlay:
-        //        Constants.Instance.DiceTurnHighlight.SetActive(true);
-        //        SanUtils.PlaySound(Constants.Instance.sfxLocalPlayerTurn, audioSource);
-        //        Dice.Instance.RollAllowed = true;
-        //        break;
-        //    default:
-        //        break;
-        //}
-
-        //}
 
         List<PlayerToken> tokensWeCanMove = new List<PlayerToken>(4);
         public static int DiceResult = 1;

@@ -2,20 +2,26 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MainMenuSky
   m_Shader: {fileID: 4800000, guid: aa2011b6c9f39da41840d48c3613ca03, type: 3}
-  m_ShaderKeywords: _EMISSION _SUNDISK_NONE
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSION
+  - _SUNDISK_NONE
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -55,6 +61,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AtmosphereThickness: 2.21
     - _BumpScale: 1
@@ -98,6 +105,8 @@ Material:
     - _GroundColor: {r: 0.4705882, g: 0.3643105, b: 0.32179928, a: 1}
     - _MoonVector: {r: 6.87, g: 2.17, b: 1.53, a: 2.21}
     - _SkyColor1: {r: 0, g: 0, b: 0, a: 1}
-    - _SkyColor2: {r: 1, g: 0.628296, b: 0, a: 1}
+    - _SkyColor2: {r: 1, g: 0, b: 0.29876354, a: 1}
     - _SkyTint: {r: 1, g: 1, b: 1, a: 1}
     - _SunColor: {r: 0.41509432, g: 0.33090067, b: 0.33090067, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1

@@ -87,7 +87,7 @@ namespace Bhambhoo
                     // If it has rigidody, bring it to rest
                     if (objectToPool.GetComponent<Rigidbody>() != null)
                     {
-                        objectToPool.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        objectToPool.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
                     }
 
                     // Add to list of pooled objects

@@ -54,14 +54,14 @@ namespace com.bhambhoo.fairludo
             {
                 randomDiceSide = Random.Range(0, 6);
                 rend.sprite = diceSides[randomDiceSide];
-                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll, MatchManager.Instance.AudioSource);
+                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll);
                 yield return new WaitForSeconds(Constants.diceRollTime / Constants.diceRollShuffles);
             }
 
             // TODO delete before release
             if (BiasedDice)
             {
-                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll, MatchManager.Instance.AudioSource);
+                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll);
                 randomDiceSide = BiasedOutcome - 1;
                 rend.sprite = diceSides[randomDiceSide];
             }

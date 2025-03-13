@@ -8,9 +8,8 @@ namespace com.bhambhoo.fairludo
     {
         public Constants.MatchType CurrentMatchType = Constants.MatchType.PassNPlay;
         public const bool InputAllowed = true;
-        public static bool MatchRunning = false;
+        public static bool MatchRunning;
         public byte NumPlayers = 2;
-        public AudioSource AudioSource;
         
         private readonly List<PlayerToken> tokensWeCanMove = new List<PlayerToken>(4);
         public static int DiceResult = 1;
@@ -23,16 +22,16 @@ namespace com.bhambhoo.fairludo
         public int DiceRollsRemaining = 0;
         public int NumSixes = 0;
 
-        private void Start()
+        public override void Awake()
         {
-            AudioSource = GetComponent<AudioSource>();
+            base.Awake();
         }
         
-        public void StartMatch(byte numPlayers, Constants.MatchType matchType)
+        public void StartMatch(byte playerCount, Constants.MatchType matchType)
         {
             MatchRunning = true;
-            //AllTokens.Clear();
-            NumPlayers = numPlayers;
+
+            NumPlayers = playerCount;
             CurrentMatchType = matchType;
 
             // De-highlight all turn highlighters
@@ -41,7 +40,7 @@ namespace com.bhambhoo.fairludo
                 oneTurnHighlighter.SetActive(false);
             }
 
-            PlayersManager.Initialize(numPlayers, matchType);
+            PlayersManager.Initialize(playerCount, matchType);
 
             NextTurn();
             // After this we will await for the dice to be rolled

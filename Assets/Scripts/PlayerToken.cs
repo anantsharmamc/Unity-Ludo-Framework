@@ -105,7 +105,7 @@ namespace com.bhambhoo.fairludo
             {
                 yield return new WaitForSeconds(Constants.delayBetweenTokenMoves);
                 LocalWaypointIndex++;
-                SanUtils.PlaySound(Constants.Instance.sfxTokenHop, MatchManager.Instance.AudioSource);
+                SanUtils.PlaySound(Constants.Instance.sfxTokenHop);
                 transform.position = Constants.Instance.GetWaypoint(player.PlayerIndex, LocalWaypointIndex).position;
             }
 

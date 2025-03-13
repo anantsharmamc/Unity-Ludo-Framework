@@ -8,14 +8,14 @@ namespace com.bhambhoo.fairludo
         private static Dictionary<Transform, AudioSource[]> transformAudioSourceMap;
         private static int ignoreRaycast = ~(1 << LayerMask.NameToLayer("Ignore Raycast"));
 
-        public static void PlaySound(AudioClip clip)
-        {
-            PlaySound(clip, MatchManager.Instance.AudioSource);
-        }
-
         // Stops the audio source and plays the given clip on it
-        public static void PlaySound(AudioClip clip, AudioSource audioSource)
+        public static void PlaySound(AudioClip clip, AudioSource audioSource = null)
         {
+            if (audioSource == null)
+            {
+                audioSource = GameManager.Instance.AudioSource;
+            }
+
             if (clip == null)
             {
                 Debug.LogError("Trying to play audio but no clip to play for audioSource on " +

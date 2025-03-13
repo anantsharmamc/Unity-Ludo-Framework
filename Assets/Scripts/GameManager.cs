@@ -14,15 +14,16 @@ namespace com.bhambhoo.fairludo
         [Range(2, 4)]
         public byte SelectedNumPlayers = 2;
 
-        private Debugger debugger;
-
         private SpeedController speedController;
+        public AudioSource AudioSource;
 
         public override void Awake()
         {
             base.Awake();
-            speedController = new SpeedController(LudoConfiguration);
-            debugger = gameObject.AddComponent<Debugger>();
+            speedController = new SpeedController(LudoConfiguration); 
+            AudioSource = GetComponent<AudioSource>();
+
+            gameObject.AddComponent<Debugger>();
         }
 
         //TODO: Use this for start of the ludo game

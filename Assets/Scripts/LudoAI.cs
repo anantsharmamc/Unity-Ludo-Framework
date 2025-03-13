@@ -10,15 +10,25 @@ namespace com.bhambhoo.fairludo
     public class LudoAI : MonoBehaviour
     {
         public static LudoAI Instance;
-
-        private void OnEnable()
+        
+        public static float DelayBeforeRollingDice = 0.5f;
+        public static float DelayInChoosingToken = 0.5f;
+        public static float DelayPlusMinus = 0.5f;
+        
+        private void Awake()
         {
             Instance = this;
         }
-
-        public static float delayBeforeRollingDice = 0.5f;
-        public static float delayInChoosingToken = 0.5f;
-        public static float delayPlusMinus = 0.5f;
+        
+        private void Start()
+        {
+            if (DelayPlusMinus > DelayBeforeRollingDice
+                || DelayPlusMinus > DelayInChoosingToken)
+            {
+                Debug.LogWarning("delayPlusMinus is larger than other delays. It results in negative time. Fix it.");
+                DelayPlusMinus = Mathf.Min(DelayBeforeRollingDice, DelayInChoosingToken);
+            }
+        }
 
         /*
          * When AI has to make a decision on which token to pick, it can do so by giving some decisions preference over others.
@@ -43,10 +53,10 @@ namespace com.bhambhoo.fairludo
             StartCoroutine(PlayAITurn());
         }
 
-        IEnumerator PlayAITurn()
+        private static IEnumerator PlayAITurn()
         {
             // Wait before rolling the dice
-            yield return new WaitForSeconds(delayBeforeRollingDice + Random.Range(-0.5f, 0.5f));
+            yield return new WaitForSeconds(DelayBeforeRollingDice + Random.Range(-0.5f, 0.5f));
 
             // Roll the dice
             Dice.Instance.BotDiceRoll();
@@ -60,10 +70,10 @@ namespace com.bhambhoo.fairludo
             StartCoroutine(AIChooseToken(tokensWeCanMove, diceResult));
         }
 
-        IEnumerator AIChooseToken(List<PlayerToken> tokensWeCanMove, int diceResult)
+        private static IEnumerator AIChooseToken(IReadOnlyList<PlayerToken> tokensWeCanMove, int diceResult)
         {
             // Wait before choosing appropriate token
-            yield return new WaitForSeconds(delayInChoosingToken + Random.Range(-0.5f, 0.5f));
+            yield return new WaitForSeconds(DelayInChoosingToken + Random.Range(-0.5f, 0.5f));
 
             // Choose appropriate token
             // TODO improve this, right now we're doing it randomly
@@ -71,16 +81,6 @@ namespace com.bhambhoo.fairludo
 
             // Done!
             yield return null;
-        }
-
-        private void Start()
-        {
-            if (delayPlusMinus > delayBeforeRollingDice
-                || delayPlusMinus > delayInChoosingToken)
-            {
-                Debug.LogWarning("delayPlusMinus is larger than other delays. It results in negative time. Fix it.");
-                delayPlusMinus = Mathf.Min(delayBeforeRollingDice, delayInChoosingToken);
-            }
         }
     }
 }

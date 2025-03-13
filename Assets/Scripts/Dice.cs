@@ -5,20 +5,19 @@ namespace com.bhambhoo.fairludo
 {
     public class Dice : MonoBehaviour
     {
-        public Sprite[] diceSides;
-        SpriteRenderer rend;
+        private Sprite[] diceSides;
+        private SpriteRenderer rend;
 
-        bool coroutineAllowed = true;
+        private bool coroutineAllowed = true;
 
-        public PlayerToken testToken;
+        public PlayerToken TestToken;
 
-        public bool biasedDice = false;
-        public int biasedOutcome = 1;
-        public static bool RollAllowed = false;
+        public bool BiasedDice;
+        public int BiasedOutcome = 1;
+        public static bool RollAllowed;
         public static Dice Instance;
-
-        // Start is called before the first frame update
-        void Start()
+        
+        private void Start()
         {
             rend = GetComponent<SpriteRenderer>();
             diceSides = Resources.LoadAll<Sprite>("DiceSides/");
@@ -26,31 +25,31 @@ namespace com.bhambhoo.fairludo
         }
 
         private void OnEnable()
-        {
+        {                                 
             Instance = this;
         }
+        
+        private void OnMouseDown()                                 
+        {                                                          
+            if (RollAllowed)                                       
+            {                                                      
+                if (MatchManager.InputAllowed && coroutineAllowed) 
+                    StartCoroutine(RollTheDice());                 
+            }                                                      
+        }                                                          
 
         public static void Highlight(bool on)
         {
             Constants.Instance.DiceTurnHighlight.SetActive(on);
         }
 
-        private void OnMouseDown()
-        {
-            if (RollAllowed)
-            {
-                if (MatchManager.InputAllowed && coroutineAllowed)
-                    StartCoroutine("RollTheDice");
-            }
-        }
-
         public void BotDiceRoll()
         {
             if (coroutineAllowed)
-                StartCoroutine("RollTheDice");
+                StartCoroutine(RollTheDice());
         }
 
-        IEnumerator RollTheDice()
+        private IEnumerator RollTheDice()
         {
             RollAllowed = false;
             coroutineAllowed = false;
@@ -60,15 +59,15 @@ namespace com.bhambhoo.fairludo
             {
                 randomDiceSide = Random.Range(0, 6);
                 rend.sprite = diceSides[randomDiceSide];
-                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll, MatchManager.Instance.audioSource);
+                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll, MatchManager.Instance.AudioSource);
                 yield return new WaitForSeconds(Constants.diceRollTime / Constants.diceRollShuffles);
             }
 
             // TODO delete before release
-            if (biasedDice)
+            if (BiasedDice)
             {
-                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll, MatchManager.Instance.audioSource);
-                randomDiceSide = biasedOutcome - 1;
+                SanUtils.PlaySound(Constants.Instance.sfxDiceRoll, MatchManager.Instance.AudioSource);
+                randomDiceSide = BiasedOutcome - 1;
                 rend.sprite = diceSides[randomDiceSide];
             }
 
@@ -78,8 +77,8 @@ namespace com.bhambhoo.fairludo
 
             // Logic to allow user to select a token, and move that token
             // TODO
-            if (testToken)
-                testToken.Move(MatchManager.DiceResult);
+            if (TestToken)
+                TestToken.Move(MatchManager.DiceResult);
 
             if (MatchManager.DiceResult == 6)
                 SanUtils.PlaySound(Constants.Instance.sfxLocalPlayer6);

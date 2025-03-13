@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace com.bhambhoo.fairludo
 {
     public class GameManager : MonoBehaviour
     {
-        public enum GameSpeed { Normal, Fast, SuperFast, Ultra };
+        private enum GameSpeed { Normal, Fast, SuperFast, Ultra };
         public static GameManager Instance;
 
         [Header("Factors for Game Speed")]
@@ -19,36 +18,33 @@ namespace com.bhambhoo.fairludo
             DelayAfterTokenMoveComplete = 0.5f, 
             DelayBetweenTokenMoves = 0.15f;
 
-        public Constants.MatchType selectedMatchType = Constants.MatchType.PassNPlay;
+        public Constants.MatchType SelectedMatchType = Constants.MatchType.PassNPlay;
         [Range(2, 4)]
-        public byte selectedNumPlayers = 2;
-
+        public byte SelectedNumPlayers = 2;
+        
+        [Header("Press F to search for tokens wrt player 1")]
+        public byte WaypointIndexToSearch;
+        
         private void OnEnable()
         {
             Instance = this;
         }
 
-        // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             SetGameSpeed(GameSpeed.Normal);
 
-            MatchManager.Instance.StartMatch(selectedNumPlayers, selectedMatchType);
-
-            // Testing
+            MatchManager.Instance.StartMatch(SelectedNumPlayers, SelectedMatchType);
         }
-
-        [Header("Press F to search for tokens wrt player 1")]
-        public byte waypointIndexToSearch = 0;
-        // Update is called once per frame
-        void Update()
+        
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                PlayersManager.Instance.ChangePlayerType(PlayersManager.Players[0], Constants.PlayerType.Bot);
+                PlayersManager.ChangePlayerType(PlayersManager.Players[0], Constants.PlayerType.Bot);
             }
             if (Input.GetKeyDown(KeyCode.F))
-                Debug.Log(PlayersManager.GetTokensAt(waypointIndexToSearch, PlayersManager.Players[0]).Count + " tokens present there!");
+                Debug.Log(PlayersManager.GetTokensAt(WaypointIndexToSearch, PlayersManager.Players[0]).Count + " tokens present there!");
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 SetGameSpeed(GameSpeed.Fast);
@@ -63,14 +59,14 @@ namespace com.bhambhoo.fairludo
             }
         }
 
-        public void SetGameSpeed(GameSpeed gameSpeed)
+        private void SetGameSpeed(GameSpeed gameSpeed)
         {
             switch (gameSpeed)
             {
                 case GameSpeed.Normal:
-                    LudoAI.delayPlusMinus = AIDelayPlusMinus;
-                    LudoAI.delayBeforeRollingDice = AIDelayBeforeRollingDice;
-                    LudoAI.delayInChoosingToken = AIDelayInChoosingToken;
+                    LudoAI.DelayPlusMinus = AIDelayPlusMinus;
+                    LudoAI.DelayBeforeRollingDice = AIDelayBeforeRollingDice;
+                    LudoAI.DelayInChoosingToken = AIDelayInChoosingToken;
 
                     Constants.diceRollShuffles = DiceRollShuffles;
                     Constants.diceRollTime = DiceRollTime;
@@ -79,9 +75,9 @@ namespace com.bhambhoo.fairludo
                     Constants.delayBetweenTokenMoves = DelayBetweenTokenMoves;
                     break;
                 case GameSpeed.Fast:
-                    LudoAI.delayPlusMinus = 0;
-                    LudoAI.delayBeforeRollingDice = 0.1f;
-                    LudoAI.delayInChoosingToken = 0.1f;
+                    LudoAI.DelayPlusMinus = 0;
+                    LudoAI.DelayBeforeRollingDice = 0.1f;
+                    LudoAI.DelayInChoosingToken = 0.1f;
                     Constants.diceRollShuffles = 5;
                     Constants.diceRollTime = 0.2f;
                     Constants.idleTimeAfterDiceRoll = 0.1f;
@@ -89,9 +85,9 @@ namespace com.bhambhoo.fairludo
                     Constants.delayBetweenTokenMoves = 0.05f;
                     break;
                 case GameSpeed.SuperFast:
-                    LudoAI.delayPlusMinus = 0;
-                    LudoAI.delayBeforeRollingDice = 0.05f;
-                    LudoAI.delayInChoosingToken = 0.05f;
+                    LudoAI.DelayPlusMinus = 0;
+                    LudoAI.DelayBeforeRollingDice = 0.05f;
+                    LudoAI.DelayInChoosingToken = 0.05f;
                     Constants.diceRollShuffles = 5;
                     Constants.diceRollTime = 0.1f;
                     Constants.idleTimeAfterDiceRoll = 0.05f;
@@ -99,9 +95,9 @@ namespace com.bhambhoo.fairludo
                     Constants.delayBetweenTokenMoves = 0.05f;
                     break;
                 case GameSpeed.Ultra:
-                    LudoAI.delayPlusMinus = 0;
-                    LudoAI.delayBeforeRollingDice = 0;
-                    LudoAI.delayInChoosingToken = 0;
+                    LudoAI.DelayPlusMinus = 0;
+                    LudoAI.DelayBeforeRollingDice = 0;
+                    LudoAI.DelayInChoosingToken = 0;
                     Constants.diceRollShuffles = 1;
                     Constants.diceRollTime = 0;
                     Constants.idleTimeAfterDiceRoll = 0;
@@ -112,6 +108,7 @@ namespace com.bhambhoo.fairludo
                     SetGameSpeed(GameSpeed.Normal);
                     break;
             }
+            
             Debug.Log("Set GameSpeed to " + gameSpeed);
         }
     }

@@ -10,7 +10,7 @@ namespace com.bhambhoo.fairludo
 
         public static void PlaySound(AudioClip clip)
         {
-            PlaySound(clip, MatchManager.Instance.audioSource);
+            PlaySound(clip, MatchManager.Instance.AudioSource);
         }
 
         // Stops the audio source and plays the given clip on it

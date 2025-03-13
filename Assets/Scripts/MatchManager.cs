@@ -1,27 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace com.bhambhoo.fairludo
 {
     public class MatchManager : MonoBehaviour
     {
-        public Constants.MatchType currentMatchType = Constants.MatchType.PassNPlay;
-        public static bool InputAllowed = true;
+        public Constants.MatchType CurrentMatchType = Constants.MatchType.PassNPlay;
+        public const bool InputAllowed = true;
         public static bool MatchRunning = false;
-        public byte numPlayers = 2;
-        public AudioSource audioSource;
+        public byte NumPlayers = 2;
+        public AudioSource AudioSource;
 
         public static MatchManager Instance;
 
-        //public List<PlayerToken> AllTokens;
+        private readonly List<PlayerToken> tokensWeCanMove = new List<PlayerToken>(4);
+        public static int DiceResult = 1;
 
+        private Player whoseTurn;
+        // if player kills another token, this is incremented
+        // this is decremented before every dice roll
+        // if player gets a six (and can move a token), this is incremented
+        // on new player's turn this is set to 1
+        public int DiceRollsRemaining = 0;
+        public int NumSixes = 0;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        private void Start()
+        {
+            AudioSource = GetComponent<AudioSource>();
+        }
+        
         public void StartMatch(byte numPlayers, Constants.MatchType matchType)
         {
             MatchRunning = true;
             //AllTokens.Clear();
-            this.numPlayers = numPlayers;
-            this.currentMatchType = matchType;
+            NumPlayers = numPlayers;
+            CurrentMatchType = matchType;
 
             // De-highlight all turn highlighters
             foreach (GameObject oneTurnHighlighter in Constants.Instance.PlayerTurnHighlighters)
@@ -29,30 +47,20 @@ namespace com.bhambhoo.fairludo
                 oneTurnHighlighter.SetActive(false);
             }
 
-            PlayersManager.Instance.Initialize(numPlayers, matchType);
+            PlayersManager.Initialize(numPlayers, matchType);
 
             NextTurn();
             // After this we will await for the dice to be rolled
         }
 
-        private void OnEnable()
-        {
-            Instance = this;
-        }
-
-        private void Start()
-        {
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        public void InitiatePlayerTurn(Player player)
+        private void InitiatePlayerTurn(Player player)
         {
             if (player == null)
                 Debug.LogError("Player is Null");
 
-            player.turnHighlighter.SetActive(true);
+            player.TurnHighlighter.SetActive(true);
 
-            switch (currentMatchType)
+            switch (CurrentMatchType)
             {
                 case Constants.MatchType.VsComputer:
                     if (player.IsLocal)
@@ -91,17 +99,6 @@ namespace com.bhambhoo.fairludo
 
         }
 
-        List<PlayerToken> tokensWeCanMove = new List<PlayerToken>(4);
-        public static int DiceResult = 1;
-
-        public Player whoseTurn;
-        // if player kills another token, this is incremented
-        // this is decremented before every dice roll
-        // if player gets a six (and can move a token), this is incremented
-        // on new player's turn this is set to 1
-        public int diceRollsRemaining = 0;
-        public int numSixes = 0;
-
         // This function gives turn to local player or next player based on if dice rolls are remaining, or not.
         public void NextTurn()
         {
@@ -109,19 +106,19 @@ namespace com.bhambhoo.fairludo
             if (whoseTurn == null)
             {
                 // Give turn to Player1 (fix this for networked game)
-                diceRollsRemaining = 1;
+                DiceRollsRemaining = 1;
                 whoseTurn = PlayersManager.Players[0];
 
                 InitiatePlayerTurn(whoseTurn);
                 return;
             }
 
-            diceRollsRemaining--;
-            if (diceRollsRemaining < 1)
+            DiceRollsRemaining--;
+            if (DiceRollsRemaining < 1)
             {
                 // It's time for next player's turn
-                numSixes = 0;
-                diceRollsRemaining = 1;
+                NumSixes = 0;
+                DiceRollsRemaining = 1;
                 whoseTurn = NextPlayer();
                 
                 InitiatePlayerTurn(whoseTurn);
@@ -153,17 +150,17 @@ namespace com.bhambhoo.fairludo
 
             if (DiceResult == 6)
             {
-                numSixes++;
+                NumSixes++;
 
-                if (numSixes > 2)
+                if (NumSixes > 2)
                 {
-                    numSixes = 0;
+                    NumSixes = 0;
                     NextTurn();
                 }
             }
 
             // Calculate which tokens can be moved from this dice result
-            foreach (PlayerToken oneToken in whoseTurn.playerTokens)
+            foreach (PlayerToken oneToken in whoseTurn.PlayerTokens)
             {
                 if (oneToken.CanMove(diceResult))
                     tokensWeCanMove.Add(oneToken);
@@ -177,7 +174,7 @@ namespace com.bhambhoo.fairludo
             {
                 // If this diceroll wasn't empty, and number of sixes isn't 3 (checked above), give this player another chance.
                 if (DiceResult == 6)
-                    diceRollsRemaining++;
+                    DiceRollsRemaining++;
 
                 if (tokensWeCanMove.Count == 1)
                 {
@@ -194,7 +191,7 @@ namespace com.bhambhoo.fairludo
                         {
                             item.Highlight(true);
                         }
-                    else if (whoseTurn.type == Constants.PlayerType.Bot)
+                    else if (whoseTurn.Type == Constants.PlayerType.Bot)
                         LudoAI.Instance.ChooseToken(tokensWeCanMove, diceResult);
                 }
             }
@@ -214,32 +211,31 @@ namespace com.bhambhoo.fairludo
 
                 tokensWeCanMove.Clear();
             }
-
         }
 
-        public Player NextPlayer()
+        private Player NextPlayer()
         {
-            return PlayersManager.GetPlayer(NextPlayerIndex(whoseTurn.playerIndex));
+            return PlayersManager.GetPlayer(NextPlayerIndex(whoseTurn.PlayerIndex));
         }
 
-        public byte NextPlayerIndex(byte currentIndex)
+        private byte NextPlayerIndex(byte currentIndex)
         {
             switch (currentIndex)
             {
                 case 1:
-                    if (numPlayers > 2)
+                    if (NumPlayers > 2)
                         return 2;
                     else return 3;
                 case 2:
                     return 3;
                 case 3:
-                    if (numPlayers > 3)
+                    if (NumPlayers > 3)
                         return 4;
                     else return 1;
                 case 4:
                     return 1;
                 default:
-                    if (numPlayers > 2)
+                    if (NumPlayers > 2)
                         return 2;
                     else return 3;
             }
